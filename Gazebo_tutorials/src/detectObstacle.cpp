@@ -77,14 +77,14 @@ void detectObstacle::scanSpace(const sensor_msgs::LaserScan::ConstPtr& msg) {
 void detectObstacle::moveForward() {
     while (1) {
         if (ros::ok()) {
-            // if (this->isWithinObsRange()) {
-            //  msg.linear.x = 0;
-            //  this->msg.angular.z = this->omega;
-            // } else {
-            //  this->msg.linear.x = this->vel;
-            //  this->msg.linear.z = 0;
-            // }
-            this->msg.linear.x = this->vel;
+            if (this->isWithinObsRange()) {
+             msg.linear.x = 0;
+             this->msg.angular.z = this->omega;
+            } else {
+             this->msg.linear.x = this->vel;
+             this->msg.linear.z = 0;
+            }
+            // this->msg.linear.x = this->vel;
             this->myPublisher.publish(this->msg);
             ros::spinOnce();
         }
