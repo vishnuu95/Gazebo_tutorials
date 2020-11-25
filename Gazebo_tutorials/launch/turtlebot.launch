@@ -1,0 +1,11 @@
+<launch>
+	<arg name='recordFlag' default="false" />
+	<include file="$(find turtlebot3_gazebo)/launch/turtlebot3_world.launch" >
+		<!-- <arg name="world_name" value="$(find Gazebo_tutorials)/worlds/tempWorld.world"/>  -->
+	</include>	
+
+	<node pkg="Gazebo_tutorials" type="detectObstacle" name="detectObstacle" output="screen" />
+
+	<node pkg = "rosbag" name= "record_bag" type="record" args="-x /camera/(.*) 
+		--duration=20 -a -O $(find Gazebo_tutorials)/bags/myRecord.bag" if = "$(arg recordFlag)"/>
+</launch>
